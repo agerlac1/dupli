@@ -11,6 +11,7 @@ from sqlite3 import Error
 from pathlib import Path
 import yaml
 import logging
+import sys
 
 # ## Set Variables
 conn = None
@@ -49,7 +50,9 @@ def connect_raw_train_data() -> sqlite3.Connection:
     """
     database = Path(raw_train_data)
     if not database.exists():
-        logging.error(f'Database {database}does not exist.')
+        logging.error(f'Database {database} does not exist.')
+        print(f'Database {database} does not exist.')
+        sys.exit()
     else:
         # create a database connection
         conn = __create_connection(database)
@@ -69,6 +72,8 @@ def connect_raw_test_data() -> sqlite3.Connection:
     database = Path(raw_test_data)
     if not database.exists():
         logging.error(f'Database {database}does not exist.')
+        print(f'Database {database} does not exist.')
+        sys.exit()
     else:
         # create a database connection
         conn = __create_connection(database)
