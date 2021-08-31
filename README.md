@@ -1,6 +1,9 @@
 ## Dokumentation Dubletten-Identifizierung📑💻
 ***
-Das **dupl** ist ein Tool, um Dubletten in Stellenanzeigen-Datenbanken zu identifizieren. 
+Das **dupli** ist ein Tool, um Dubletten in Stellenanzeigen-Datenbanken zu identifizieren. 
+Es entstand im Rahmen einer Masterarbeit im Projekt [Quenfo](https://dh.phil-fak.uni-koeln.de/forschung/qualifikationsentwicklungsforschung) 
+und in Kooperation mit dem Bundesinstitut für Berufsbildung.
+
 
 **Zielsetzung:**
 
@@ -39,7 +42,7 @@ Um die Stopword-Liste von NLTK nutzen zu können, muss folgende Zeile zusätzlic
 
 `python -m nltk.downloader stopwords`
 
-Mit der nachfolgenden Ausführung wird das gesamte Programm samt Default-Settings aufgerufen (Dummy-Dateien aus dem Input-Ordner werden verwendet).
+Mit der nachfolgenden Ausführung wird das gesamte Programm samt Default-Settings aufgerufen (Pfade zu Testdaten und Trainingsdaten müssen zuvor in der config.yaml angegeben werden).
 
 `python main.py all_in_one`
 
@@ -69,7 +72,7 @@ Die Daten werden iterativ durch die Anwendung geleitet. Die Trainingsdaten fungi
 #### Code Struktur
 Der Code ist so struktuiert, dass sich die einzelnen Module (im Workflow s.o. erkennbar) ebenfalls in der Ordnerstruktur wiederfinden.
 ```
-📦dupl
+📦dupli
 ├── 📂code
 │   ├── 📂analysis
 │   │   ├── 📂analysis_inside (Zielsetzung a)
@@ -177,7 +180,7 @@ Ordner, in denen die Input, Output und Temp-Dateien liegen. Wenn andere Pfade f�
 ***
 In der Datei config.yaml sind alle Pfade, einstellbare Parameter und der Metadaten-Filter vermerkt. Dadurch wird gewährleistet, dass im Code selbst für eine Anwendung nichts verändert werden muss. Alle Änderungen werden in der `config.yaml` Datei vorgenommen.
 
-**Im aktuellen Zustand befindet sich das Programm in der "Werkseinstellung" und es können nach Belieben Modelle trainiert und Daten analysiert werden (mit den Dummy-Dateien im Input-Ordner).**
+**Im aktuellen Zustand befindet sich das Programm in der "Werkseinstellung" und es können nach Belieben Modelle trainiert und Daten analysiert werden (mit entsprechenden Pfadangaben zu Test- und Trainingsdaten).**
 
 Ansonsten können folgende Werte angepasst werden:
 
