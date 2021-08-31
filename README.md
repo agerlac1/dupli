@@ -32,7 +32,7 @@ Die Anwendung wurde in Python 3.7 geschrieben.
 
 Klone das Repository
 
-`git clone https://github.com/agerlac1/dupl.git`
+`git clone https://github.com/agerlac1/dupli.git`
 
 cd in den Ordner **dupl/code**: hier liegt die requirements Datei und das Programm wird von hier ausgeführt.
 
