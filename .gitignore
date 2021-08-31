@@ -1,0 +1,14 @@
+models/models_doc2vec/model_trained/*
+models/models_doc2vec/model_retrained/*
+models/models_doc2vec/models_backup/*
+!models/models_doc2vec/models_backup/.gitkeep
+!models/models_doc2vec/model_trained/.gitkeep
+!models/models_doc2vec/model_retrained/.gitkeep
+models/models_doc2vec/models_backup.zip
+models/models_tfidf/*
+!models/models_tfidf/.gitkeep
+models/models_tfidf/tfidftransformer.pkl
+envi37/
+envi37
+ __pycache__/
+ *.pyc

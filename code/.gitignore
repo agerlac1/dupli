@@ -1,0 +1,18 @@
+input/input_test_data.db
+input/input_train_data.db
+input/*
+!input/.gitkeep
+
+!temp/.gitkeep
+!temp/**/
+!temp/**/.gitkeep
+temp/*.db
+temp/**/*
+
+output/*
+!output/.gitkeep
+
+__pycache__/
+ /*.pyc
+*.pyc
+.vscode

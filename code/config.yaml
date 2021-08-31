@@ -1,0 +1,101 @@
+# +++++ Configuration ++++++
+
+# --- Pfade ---
+# Input-Pfade für die Trainingsdaten und die Testdaten.
+input_paths:
+    train_data: 'input/input_train_data.db'
+    test_data: 'input/input_test_data.db'
+
+# Output-Pfad
+output_path: 'output/detected_duplicates.db'
+
+# Temp-Pfade
+temp_paths:
+    # Trainings- und Testdaten, nachdem sie unique_ids bekommen haben.
+    id_train: 'temp/id_train_data.db'
+    id_test: 'temp/id_test_data.db'
+
+    # Für Masterarbeit Replikation (oberen Zeilen dann auskommentieren).
+    #id_test: 'temp/backup_id_test_data.db'
+    #id_train: 'temp/backup_jobs_id_train_data.db'          # Bei Jobs-Daten überprüfe, dass bei Doc2Vec Modellen auch ein Jobs-Modell ausgewählt wurde.
+    #id_train: 'temp/backup_postings_id_train_data.db'      # Bei Postings-Daten überprüfe, dass bei Doc2Vec Modellen auch ein Postings-Modell ausgewählt wurde.
+    
+    # Backup-Files (können so gelassen werden).
+    prepro_path: 'temp/temps_analysis_in/prepro_test_data.db'
+    pair_path: 'temp/temps_analysis_in/pair_test_data.db'
+    calc_path: 'temp/temps_analysis_in/calc_test_data.db'
+    path_to_tokenslist: 'temp/temps_analysis_out/tokenslist.txt'
+    path_to_trainlist: 'temp/temps_analysis_out/trainlist.txt'
+    path_to_simsdict: 'temp/temps_analysis_out/simsdict.txt'
+    path_to_simslisttest: 'temp/temps_analysis_out/simslisttest.txt'
+    path_to_simslisttrain: 'temp/temps_analysis_out/simslisttrain.txt'
+
+# --- Modell-Arten und Modell-Pfade ---
+d2v_model_type:
+    type: 'd2v_model'       # Type bedeutet: für den Sanity_check und die Analysis ein mit Doc2Vec TRAINIERTES Modell verwendet.
+    #type: 'd2v_remodel'    # Type bedeutet: für den Sanity_check und die Analysis ein mit Doc2Vec RETRAINIERTES Modell verwendet.
+
+model_paths:
+    # Doc2Vec Modelle:
+        # Bei type 'd2v_model':
+    model_path: '../models/models_doc2vec/model_trained/model'
+    # Für Masterarbeit Replikation, eins der beiden folgenden auswählen
+    #model_path: '../models/models_doc2vec/models_backup/jobs_1248M/model_trained/model'
+    #model_path: '../models/models_doc2vec/models_backup/postings_126M/model_trained/model'
+
+        # Bei type 'd2v_remodel':
+    retrained_model_path: '../models/models_doc2vec/model_retrained/model'
+    # Für Masterarbeit Replikation, eins der beiden folgenden auswählen
+    #retrained_model_path: '../models/models_doc2vec/models_backup/jobs_1248M/model_retrained/model'
+    #retrained_model_path: '../models/models_doc2vec/models_backup/postings_126M/model_retrained/model'
+    
+    # TF-IDF Modelle:
+    tfidf_model_path: '../models/models_tfidf/tfidftransformer.pkl'
+    #tfidf_model_path: '../models/models_tfidf/tfidftransformer_jobs_sublinearfalse.pkl'
+    #tfidf_model_path: '../models/models_tfidf/tfidftransformer_jobs_sublineartrue.pkl'
+    #tfidf_model_path: '../models/models_tfidf/tfidftransformer_postings_sublinearfalse.pkl'
+    #tfidf_model_path: '../models/models_tfidf/tfidftransformer_postings_sublinearfalse.pkl'
+
+# --- Parameter für das Doc2Vec modeling ---
+doc2vec_model:
+    vector_size: 100
+    min_count: 1 
+    epochs: 25
+    alpha: 0.025
+
+# --- Parameter für das TF-IDF modeling ---
+tfidf_model:
+    sublinear_tf: false
+
+# --- Support-Dateien ---
+    
+# Datei mit der zuletzt vergebenen unique_id (kann geändert werden, wenn Schritte repliziert werden sollen). 
+id_support: 'id_handling/last_unique_id.txt'
+# Manuelle Annotation der Testdaten (nur für Masterarbeit relevant).
+solution_annotated: 'analysis/pairing/solution_annotated.txt'
+
+# --- Data-Handling ---
+# Lege fest, wie die SQL-Datenbanken ausgelesen werden. 
+# Wegen der enormen Größe der Datenbanken, wurde für die Masterarbeit für die Jobs und Postings jeweils eine Chunksize und max. Chunkmenge pro Tabelle festgelegt.
+
+# Wenn bestimmte Tabellen nicht ausgelesen werden sollen, kann hier ein Filter gesetzt werden (Tabellen mit dem Jahr 2020 werden nicht verwendet.)
+filter_tablename: 2020
+# Jobs:
+chunk_size: 8000
+countermax_per_table: 24000     # kann bei keiner Limitierung auf 0 gesetzt werden, dann wird die gesamte table ausgelesen.
+
+# Postings:
+#chunk_size: 8750
+#countermax_per_table: 105000
+
+# --- Metadaten-Filter ---
+metadata_filter:
+  date:             # Intervall in dem Stellenanzeigen als Dubletten gelten (in Tagen), abhängig vom Veröffentlichungsdatum.
+      past: 60
+      future: 60
+  full_text:        # Stellenanzeigen, die identische Texte haben, werden als potentielle Dubletten gewertet.
+      true
+  location_name:    # Stellenanzeigen, die die gleichen location_names haben, werden als potentielle Dubletten gewertet.
+      true
+  profisco_advname: # Stellenanzeigen, die die gleiche prof_isco und/oder den gleichen advertiser_name haben, werden als Dubletten gewertet.
+      true
